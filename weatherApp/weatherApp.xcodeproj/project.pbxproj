@@ -13,6 +13,7 @@
 		043FD739250E4BC300FC3AB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043FD737250E4BC300FC3AB5 /* Main.storyboard */; };
 		043FD73B250E4BC700FC3AB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 043FD73A250E4BC700FC3AB5 /* Assets.xcassets */; };
 		043FD73E250E4BC700FC3AB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043FD73C250E4BC700FC3AB5 /* LaunchScreen.storyboard */; };
+		043FD746250EB3E800FC3AB5 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		043FD73A250E4BC700FC3AB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		043FD73D250E4BC700FC3AB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		043FD73F250E4BC700FC3AB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				043FD731250E4BC300FC3AB5 /* AppDelegate.swift */,
 				043FD733250E4BC300FC3AB5 /* SceneDelegate.swift */,
 				043FD735250E4BC300FC3AB5 /* ViewController.swift */,
+				043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */,
 				043FD737250E4BC300FC3AB5 /* Main.storyboard */,
 				043FD73A250E4BC700FC3AB5 /* Assets.xcassets */,
 				043FD73C250E4BC700FC3AB5 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043FD746250EB3E800FC3AB5 /* WeatherTableViewCell.swift in Sources */,
 				043FD736250E4BC300FC3AB5 /* ViewController.swift in Sources */,
 				043FD732250E4BC300FC3AB5 /* AppDelegate.swift in Sources */,
 				043FD734250E4BC300FC3AB5 /* SceneDelegate.swift in Sources */,
