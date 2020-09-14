@@ -9,18 +9,9 @@
 import Foundation
 
 struct WeatherData: Codable {
-    var main : [MainData]
-    var weather : [weatherType]
+    var main : currentWeatherTemperature
+    var weather : [CurrentWeatherType]
 }
 
 
-struct MainData: Codable {
-    var temp_min : Double
-    var temp_max : Double
-    var temp : Double
-}
 
-
-struct weatherType: Codable {
-    var main : String
-}

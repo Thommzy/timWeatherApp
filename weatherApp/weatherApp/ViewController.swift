@@ -9,13 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var data = [WeatherData]()
+    //var data = [WeatherData]()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //DataLoader.loadData(<#T##self: DataLoader##DataLoader#>)
-        DataLoader().loadData(closure: { (book) in
-            data = book
+        DataLoader().loadData(closure: { (weather) in
+            print(">><><><><>", weather)
+            
         })
     }
     
