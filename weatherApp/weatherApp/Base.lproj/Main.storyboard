@@ -135,7 +135,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherListCell" id="BPM-CR-BkV" customClass="WeatherListCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherListCell" id="BPM-CR-BkV" customClass="WeatherTableViewCell" customModule="weatherApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BPM-CR-BkV" id="R4Z-nM-Ak6">
@@ -143,7 +143,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5b-uC-31w">
-                                                    <rect key="frame" x="20" y="11" width="66" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="87" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -154,7 +154,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naP-Od-jxH">
-                                                    <rect key="frame" x="352" y="11" width="30" height="21"/>
+                                                    <rect key="frame" x="340" y="11" width="54" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -163,6 +163,10 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="daysLabel" destination="m5b-uC-31w" id="M8a-jr-FcW"/>
+                                            <outlet property="daysTemperatureLabel" destination="naP-Od-jxH" id="zxd-X7-76O"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -188,12 +192,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="CurrentTemperatureLabel" destination="iHC-af-3z7" id="Lf4-gn-t8v"/>
-                        <outlet property="MaximumTemperatureLabel" destination="r8s-1q-zG3" id="Huu-0a-Il8"/>
-                        <outlet property="MinimumTemperatureLabel" destination="iue-PD-GXq" id="HW7-Js-8O5"/>
-                        <outlet property="WeatherBackgroundImage" destination="pad-Ct-bij" id="Vpg-IS-Wjt"/>
-                        <outlet property="WeatherDescriptionLabel" destination="HAs-tQ-ggQ" id="elx-kE-DMr"/>
-                        <outlet property="WeatherTemperatureLabel" destination="6rM-fD-Jqb" id="1wL-BM-X1p"/>
+                        <outlet property="currentTemperatureLabel" destination="iHC-af-3z7" id="PID-qY-gxy"/>
+                        <outlet property="maximumTemperatureLabel" destination="r8s-1q-zG3" id="d5i-my-PU5"/>
+                        <outlet property="minimumTemperatureLabel" destination="iue-PD-GXq" id="3ug-hF-PAq"/>
+                        <outlet property="weatherBackgroundImage" destination="pad-Ct-bij" id="Wjx-1f-L59"/>
+                        <outlet property="weatherDescriptionLabel" destination="HAs-tQ-ggQ" id="YSf-AV-ajs"/>
+                        <outlet property="weatherTableView" destination="i85-JS-suA" id="TKZ-mi-14T"/>
+                        <outlet property="weatherTemperatureLabel" destination="6rM-fD-Jqb" id="f02-Px-iqg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

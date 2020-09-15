@@ -10,65 +10,93 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var WeatherBackgroundImage: UIImageView!
-    @IBOutlet weak var WeatherTemperatureLabel: UILabel!
-    @IBOutlet weak var WeatherDescriptionLabel: UILabel!
-    @IBOutlet weak var MinimumTemperatureLabel: UILabel!
-    @IBOutlet weak var MaximumTemperatureLabel: UILabel!
-    @IBOutlet weak var CurrentTemperatureLabel: UILabel!
-    var data : WeatherData?
+    @IBOutlet weak var weatherTableView: UITableView!
+    @IBOutlet weak var weatherBackgroundImage: UIImageView!
+    @IBOutlet weak var weatherTemperatureLabel: UILabel!
+    @IBOutlet weak var weatherDescriptionLabel: UILabel!
+    @IBOutlet weak var minimumTemperatureLabel: UILabel!
+    @IBOutlet weak var maximumTemperatureLabel: UILabel!
+    @IBOutlet weak var currentTemperatureLabel: UILabel!
     
-   
+    var data : WeatherData?
+    var dailyData : [(String, Double)] = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         DataLoader().loadData(closure: { (weather) in
             self.data = weather
             self.loadCurrentData()
         })
+        
+        DailyWeatherLoader().loadDaysData(closure: { (weather) in
+            self.dailyData = filteredDateAndTemperature(weather.list)
+            self.reloadTableView()
+        })
     }
+    
+    func reloadTableView()  {
+        DispatchQueue.main.async {
+            self.weatherTableView.reloadData()
+        }
+    }
+    
     
     func loadCurrentData() {
         let queue = DispatchQueue(label: "")
            queue.async {
             DispatchQueue.main.async {
+                print("ds")
                if let data =  self.data {
-                   let kelvinConstant  = 273.15
-                   let currenTemperature = data.main.temp
-                   let minimumTemperature = data.main.temp_min
-                   let maximumTemperature = data.main.temp_max
-                   let currentValue = String(format: "%.0f", currenTemperature - kelvinConstant)
-                   let minimumValue = String(format: "%.0f", minimumTemperature - kelvinConstant)
-                   let maximumValue = String(format: "%.0f", maximumTemperature - kelvinConstant)
-                   let weatherType = data.weather.map{$0.main}[0]
-                   self.MinimumTemperatureLabel.text = "\(minimumValue)°"
-                   self.WeatherTemperatureLabel.text = "\(currentValue)°"
-                   self.CurrentTemperatureLabel.text = "\(currentValue)°"
-                   self.MaximumTemperatureLabel.text = "\(maximumValue)°"
-                   self.WeatherTemperatureLabel.font = self.WeatherTemperatureLabel.font.withSize(45)
-                   self.WeatherDescriptionLabel.text = weatherType
-                   self.WeatherDescriptionLabel.font = self.WeatherDescriptionLabel.font.withSize(35)
-                   let cloudyColor = #colorLiteral(red: 0.3294117647, green: 0.4431372549, blue: 0.4784313725, alpha: 1)
-                   let rainyColor = #colorLiteral(red: 0.3411764706, green: 0.3411764706, blue: 0.3647058824, alpha: 1)
-                   if weatherType == "Clouds" {
-                        self.WeatherBackgroundImage.image = UIImage(named: ("forest_cloudy"))
-                        self.view.backgroundColor = cloudyColor
-                    }
-                    if weatherType == "Rain" || weatherType == "Thunderstorm" {
-                        self.WeatherBackgroundImage.image = UIImage(named: ("forest_rainy"))
-                        self.view.backgroundColor = rainyColor
-                    }
+               let kelvinConstant  = 273.15
+               let currenTemperature = data.main.temp
+               let minimumTemperature = data.main.temp_min
+               let maximumTemperature = data.main.temp_max
+               let currentValue = String(format: "%.0f", currenTemperature - kelvinConstant)
+               let minimumValue = String(format: "%.0f", minimumTemperature - kelvinConstant)
+               let maximumValue = String(format: "%.0f", maximumTemperature - kelvinConstant)
+               let weatherType = data.weather.map{$0.main}[0]
+               self.minimumTemperatureLabel.text = "\(minimumValue)°"
+               self.weatherTemperatureLabel.text = "\(currentValue)°"
+               self.currentTemperatureLabel.text = "\(currentValue)°"
+               self.maximumTemperatureLabel.text = "\(maximumValue)°"
+               self.weatherTemperatureLabel.font = self.weatherTemperatureLabel.font.withSize(45)
+               self.weatherDescriptionLabel.text = weatherType
+               self.weatherDescriptionLabel.font = self.weatherDescriptionLabel.font.withSize(35)
+               self.switchImageAndColor()
                }
             }
         }
     }
     
+    func switchImageAndColor() {
+        if let data = self.data {
+            let cloudyColor = #colorLiteral(red: 0.3294117647, green: 0.4431372549, blue: 0.4784313725, alpha: 1)
+            let rainyColor = #colorLiteral(red: 0.3411764706, green: 0.3411764706, blue: 0.3647058824, alpha: 1)
+            let weatherType = data.weather.map{$0.main}[0]
+            if weatherType == "Clouds" {
+            self.weatherBackgroundImage.image = UIImage(named: ("forest_cloudy"))
+            self.view.backgroundColor = cloudyColor
+            }
+            if weatherType == "Rain" || weatherType == "Thunderstorm" {
+            self.weatherBackgroundImage.image = UIImage(named: ("forest_rainy"))
+            self.view.backgroundColor = rainyColor
+           }
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        return self.dailyData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherListCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherListCell", for: indexPath) as? WeatherTableViewCell else {
+                   fatalError("Unable to dequeue weatherListCell.")
+               }
+        let indexData = self.dailyData[indexPath.row]
+        cell.daysLabel.text = indexData.0
+        cell.daysTemperatureLabel.text = String(indexData.1)
         return cell
     }
 }
