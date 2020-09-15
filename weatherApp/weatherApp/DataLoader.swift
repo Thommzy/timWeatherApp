@@ -10,23 +10,21 @@ import Foundation
 
 class DataLoader {
     func loadData(closure: @escaping (WeatherData) -> ()) {
-        let weatherUrl =
-        "https://api.openweathermap.org/data/2.5/weather?q=osun&appid=7a22797d0651a1c44a55227285888de5"
+        let baseUrl = "https://api.openweathermap.org/data/2.5/weather"
+        let apiKey = "7a22797d0651a1c44a55227285888de5"
+        let state = "Kano"
+        let weatherUrl = "\(baseUrl)?q=\(state)&appid=\(apiKey)"
         guard let url = URL(string: weatherUrl) else {return}
         let session = URLSession.shared
         session.dataTask(with: url) { (data, response, error) in
-        if let response = response {
-            print(">>>>>||>>>>", response)
-        }
         if let data = data {
                 do{
                     let jsonDecoder = JSONDecoder()
                     let dataFromJson =  try jsonDecoder.decode(WeatherData.self, from: data)
                        closure(dataFromJson)
-                    print("json>>>>>", data)
                    }
             catch {
-                print("error<<<<<<", error)
+                print(error)
             }
           }
         }.resume()
