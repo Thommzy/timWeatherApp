@@ -26,7 +26,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         DataLoader().loadData(closure: { (weather) in
             self.data = weather
-            print(self.data)
             self.loadCurrentData()
         })
         
@@ -36,21 +35,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         })
     }
     
-    func reloadTableView()  {
-        DispatchQueue.main.async {
-            self.weatherTableView.reloadData()
-        }
-    }
-    
-    
     func loadCurrentData() {
         let queue = DispatchQueue(label: "")
            queue.async {
             DispatchQueue.main.async {
                if let data =  self.data {
                let currenTemperature = data.main.temp
-                let minimumTemperature = data.main.minimumTemperature
-                let maximumTemperature = data.main.maximumTemperature
+               let minimumTemperature = data.main.minimumTemperature
+               let maximumTemperature = data.main.maximumTemperature
                let currentValue = String(format: "%.0f", currenTemperature)
                let minimumValue = String(format: "%.0f", minimumTemperature)
                let maximumValue = String(format: "%.0f", maximumTemperature)
@@ -84,8 +76,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-
-    
+    func reloadTableView()  {
+        DispatchQueue.main.async {
+            self.weatherTableView.reloadData()
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dailyData.count
@@ -98,7 +93,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let indexData = self.dailyData[indexPath.row]
         cell.daysLabel.text = dateToDay(indexData.0)
         cell.daysTemperatureLabel.text = String(format: "%.0f" + "°", (indexData.1))
-        cell.daysWeatherIcon.image = indexData.2 == "Rain" ? UIImage(named: ("rain")) : indexData.2 == "Clouds" ? UIImage(named: ("rain")) : UIImage(named: ("clear"))
+        cell.daysWeatherIcon.image = indexData.2 == "Rain" ? UIImage(named: ("rain")) : indexData.2 == "Clouds" || indexData.2 == "Mist" ? UIImage(named: ("partlysunny")) : UIImage(named: ("clear"))
         return cell
     }
 }
