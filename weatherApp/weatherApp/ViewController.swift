@@ -26,6 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         DataLoader().loadData(closure: { (weather) in
             self.data = weather
+            print(self.data)
             self.loadCurrentData()
         })
         
@@ -48,8 +49,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                if let data =  self.data {
                let currenTemperature = data.main.temp
-               let minimumTemperature = data.main.temp_min
-               let maximumTemperature = data.main.temp_max
+                let minimumTemperature = data.main.minimumTemperature
+                let maximumTemperature = data.main.maximumTemperature
                let currentValue = String(format: "%.0f", currenTemperature)
                let minimumValue = String(format: "%.0f", minimumTemperature)
                let maximumValue = String(format: "%.0f", maximumTemperature)

@@ -12,8 +12,8 @@ import Foundation
 func filteredDateAndTemperature(_ weatherList: [DailyListTemperatue]) -> [(String, Double, String)] {
      var weatherTuple = [(String, Double, String)]()
      for weatherDetails in weatherList {
-         if weatherDetails.dt_txt.contains("06:00:00") {
-            weatherTuple.append((weatherDetails.dt_txt,weatherDetails.main.temp, weatherDetails.weather[0].main))
+         if weatherDetails.date.contains("06:00:00") {
+            weatherTuple.append((weatherDetails.date,weatherDetails.main.temp, weatherDetails.weather[0].main))
          }
      }
      return weatherTuple

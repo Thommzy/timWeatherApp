@@ -10,5 +10,13 @@ import Foundation
 
 
 struct currentWeatherTemperature: Codable {
-    let temp, temp_min, temp_max: Double
+    let temp, minimumTemperature, maximumTemperature: Double
+    
+    private enum CodingKeys: String, CodingKey {
+        case minimumTemperature = "temp_min"
+        case maximumTemperature = "temp_max"
+        case temp
+    }
 }
+
+

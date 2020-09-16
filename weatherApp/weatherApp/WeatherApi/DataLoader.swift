@@ -26,7 +26,7 @@ class DataLoader {
                        closure(dataFromJson)
                    }
             catch {
-                print(error)
+                print("kdjjd",error)
             }
           }
         }.resume()

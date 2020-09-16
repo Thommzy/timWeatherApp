@@ -10,9 +10,14 @@ import Foundation
 
 
 struct DailyListTemperatue : Codable {
-    let dt_txt : String
+    let date : String
     let main : MainTemperature
     let weather : [Weather]
+    
+    private enum CodingKeys: String, CodingKey {
+        case date = "dt_txt"
+        case main, weather
+    }
 }
 
 struct MainTemperature : Codable {
