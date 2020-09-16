@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var currentTemperatureLabel: UILabel!
     
     var data : WeatherData?
-    var dailyData : [(String, Double)] = []
+    var dailyData : [(String, Double, String)] = []
     
     
     override func viewDidLoad() {
@@ -46,15 +46,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let queue = DispatchQueue(label: "")
            queue.async {
             DispatchQueue.main.async {
-                print("ds")
                if let data =  self.data {
-               let kelvinConstant  = 273.15
                let currenTemperature = data.main.temp
                let minimumTemperature = data.main.temp_min
                let maximumTemperature = data.main.temp_max
-               let currentValue = String(format: "%.0f", currenTemperature - kelvinConstant)
-               let minimumValue = String(format: "%.0f", minimumTemperature - kelvinConstant)
-               let maximumValue = String(format: "%.0f", maximumTemperature - kelvinConstant)
+               let currentValue = String(format: "%.0f", currenTemperature)
+               let minimumValue = String(format: "%.0f", minimumTemperature)
+               let maximumValue = String(format: "%.0f", maximumTemperature)
                let weatherType = data.weather.map{$0.main}[0]
                self.minimumTemperatureLabel.text = "\(minimumValue)°"
                self.weatherTemperatureLabel.text = "\(currentValue)°"
@@ -74,16 +72,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cloudyColor = #colorLiteral(red: 0.3294117647, green: 0.4431372549, blue: 0.4784313725, alpha: 1)
             let rainyColor = #colorLiteral(red: 0.3411764706, green: 0.3411764706, blue: 0.3647058824, alpha: 1)
             let weatherType = data.weather.map{$0.main}[0]
-            if weatherType == "Clouds" {
-            self.weatherBackgroundImage.image = UIImage(named: ("forest_cloudy"))
-            self.view.backgroundColor = cloudyColor
-            }
-            if weatherType == "Rain" || weatherType == "Thunderstorm" {
-            self.weatherBackgroundImage.image = UIImage(named: ("forest_rainy"))
-            self.view.backgroundColor = rainyColor
-           }
+                if weatherType == "Clouds" {
+                    self.weatherBackgroundImage.image = UIImage(named: ("forest_cloudy"))
+                    self.view.backgroundColor = cloudyColor
+                }
+                if weatherType == "Rain" || weatherType == "Thunderstorm" {
+                    self.weatherBackgroundImage.image = UIImage(named: ("forest_rainy"))
+                    self.view.backgroundColor = rainyColor
+               }
         }
     }
+    
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,8 +95,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                    fatalError("Unable to dequeue weatherListCell.")
                }
         let indexData = self.dailyData[indexPath.row]
-        cell.daysLabel.text = indexData.0
-        cell.daysTemperatureLabel.text = String(indexData.1)
+        cell.daysLabel.text = dateToDay(indexData.0)
+        cell.daysTemperatureLabel.text = String(format: "%.0f" + "°", (indexData.1))
+        cell.daysWeatherIcon.image = indexData.2 == "Rain" ? UIImage(named: ("rain")) : indexData.2 == "Clouds" ? UIImage(named: ("rain")) : UIImage(named: ("clear"))
         return cell
     }
 }

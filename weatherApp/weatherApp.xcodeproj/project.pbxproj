@@ -82,9 +82,9 @@
 				043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */,
 				043FD737250E4BC300FC3AB5 /* Main.storyboard */,
 				043FD73A250E4BC700FC3AB5 /* Assets.xcassets */,
+				04F53CEE25110F1900370898 /* HelperFunctions.swift */,
 				043FD73C250E4BC700FC3AB5 /* LaunchScreen.storyboard */,
 				043FD73F250E4BC700FC3AB5 /* Info.plist */,
-				04F53CEE25110F1900370898 /* HelperFunctions.swift */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";

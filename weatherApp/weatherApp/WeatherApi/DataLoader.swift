@@ -14,8 +14,8 @@ class DataLoader {
     func loadData(closure: @escaping (WeatherData) -> ()) {
         let baseUrl = "https://api.openweathermap.org/data/2.5/weather"
         let apiKey = "7a22797d0651a1c44a55227285888de5"
-        let state = "Lagos"
-        let weatherUrl = "\(baseUrl)?q=\(state)&appid=\(apiKey)"
+        let state = "Osun"
+        let weatherUrl = "\(baseUrl)?q=\(state)&appid=\(apiKey)&units=metric"
         guard let url = URL(string: weatherUrl) else {return}
         let session = URLSession.shared
         session.dataTask(with: url) { (data, response, error) in

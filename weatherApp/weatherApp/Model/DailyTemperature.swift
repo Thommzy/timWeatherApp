@@ -12,8 +12,13 @@ import Foundation
 struct DailyListTemperatue : Codable {
     let dt_txt : String
     let main : MainTemperature
+    let weather : [Weather]
 }
 
 struct MainTemperature : Codable {
     let temp : Double
+}
+
+struct Weather : Codable {
+    let main : String
 }
