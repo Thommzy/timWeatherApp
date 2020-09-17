@@ -13,7 +13,7 @@ class DailyWeatherLoader {
     func loadDaysData(closure: @escaping (DaysWeather) -> ()) {
                let baseUrl = "https://api.openweathermap.org/data/2.5/forecast"
                let apiKey = "7a22797d0651a1c44a55227285888de5"
-               let state = "Osun"
+               let state = "Kano"
                let weatherUrl = "\(baseUrl)?q=\(state)&appid=\(apiKey)&units=metric"
                guard let url = URL(string: weatherUrl) else {return}
                let session = URLSession.shared

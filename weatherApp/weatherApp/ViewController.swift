@@ -24,22 +24,45 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.currentDefaults()
+        self.loadCurrentData()
+        
         DataLoader().loadData(closure: { (weather) in
             self.data = weather
             self.loadCurrentData()
+            if let encoded = try? JSONEncoder().encode(weather) {
+                UserDefaults.standard.set(encoded, forKey: "currentData")
+            }
         })
+        
         
         DailyWeatherLoader().loadDaysData(closure: { (weather) in
             self.dailyData = filteredDateAndTemperature(weather.list)
             self.reloadTableView()
+            if let encoded = try? JSONEncoder().encode(weather) {
+                UserDefaults.standard.set(encoded, forKey: "tableData")
+            }
         })
     }
+    
+    func currentDefaults() {
+        DispatchQueue.main.async {
+            if let loadData = UserDefaults.standard.data(forKey: "currentData"),
+                let data = try? JSONDecoder().decode(WeatherData.self, from: loadData) {
+                self.data = data
+            }
+        }
+    }
+    
+ 
     
     func loadCurrentData() {
         let queue = DispatchQueue(label: "")
            queue.async {
             DispatchQueue.main.async {
+             
                if let data =  self.data {
+               
                let currenTemperature = data.main.temp
                let minimumTemperature = data.main.minimumTemperature
                let maximumTemperature = data.main.maximumTemperature
@@ -56,6 +79,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                self.weatherDescriptionLabel.font = self.weatherDescriptionLabel.font.withSize(35)
                self.switchImageAndColor()
                }
+               
             }
         }
     }
