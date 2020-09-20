@@ -16,6 +16,7 @@
 		043FD746250EB3E800FC3AB5 /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */; };
 		043FD749250EED8400FC3AB5 /* CurrentWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FD748250EED8400FC3AB5 /* CurrentWeatherModel.swift */; };
 		043FD74B250EF34B00FC3AB5 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FD74A250EF34B00FC3AB5 /* DataLoader.swift */; };
+		044C6D0925177CFB009F13F3 /* APIKEY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044C6D0825177CFB009F13F3 /* APIKEY.swift */; };
 		04F53CE7250FD44D00370898 /* CurrentWeatherTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53CE6250FD44D00370898 /* CurrentWeatherTemperature.swift */; };
 		04F53CE9250FD4DC00370898 /* CurrentWeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53CE8250FD4DC00370898 /* CurrentWeatherType.swift */; };
 		04F53CEB2510FEB500370898 /* DaysWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F53CEA2510FEB500370898 /* DaysWeather.swift */; };
@@ -36,6 +37,7 @@
 		043FD745250EB3E800FC3AB5 /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		043FD748250EED8400FC3AB5 /* CurrentWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherModel.swift; sourceTree = "<group>"; };
 		043FD74A250EF34B00FC3AB5 /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
+		044C6D0825177CFB009F13F3 /* APIKEY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKEY.swift; sourceTree = "<group>"; };
 		04F53CE6250FD44D00370898 /* CurrentWeatherTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherTemperature.swift; sourceTree = "<group>"; };
 		04F53CE8250FD4DC00370898 /* CurrentWeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherType.swift; sourceTree = "<group>"; };
 		04F53CEA2510FEB500370898 /* DaysWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysWeather.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				04F53CEE25110F1900370898 /* HelperFunctions.swift */,
 				043FD73C250E4BC700FC3AB5 /* LaunchScreen.storyboard */,
 				043FD73F250E4BC700FC3AB5 /* Info.plist */,
+				044C6D0825177CFB009F13F3 /* APIKEY.swift */,
 			);
 			path = weatherApp;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044C6D0925177CFB009F13F3 /* APIKEY.swift in Sources */,
 				04F53CE9250FD4DC00370898 /* CurrentWeatherType.swift in Sources */,
 				04F53CF2251140D700370898 /* DailyWeatherLoader.swift in Sources */,
 				04F53CE7250FD44D00370898 /* CurrentWeatherTemperature.swift in Sources */,

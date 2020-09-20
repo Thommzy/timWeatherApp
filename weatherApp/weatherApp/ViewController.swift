@@ -26,6 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         self.currentDefaults()
         self.loadCurrentData()
+        self.tableData()
         
         DataLoader().loadData(closure: { (weather) in
             self.data = weather
@@ -53,6 +54,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
+    
+    func tableData() {
+              DispatchQueue.main.async {
+                  if let loadData = UserDefaults.standard.data(forKey: "tableData"),
+                   let data = try? JSONDecoder().decode(DaysWeather.self, from: loadData) {
+                   self.dailyData = filteredDateAndTemperature(data.list)
+                   self.reloadTableView()
+                  }
+              }
+          }
     
  
     
