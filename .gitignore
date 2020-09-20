@@ -116,6 +116,6 @@ iOSInjectionProject/
 
 # ApiKey file
 
-/weatherApp/weatherApp/APIKEY.swift
+weatherApp/weatherApp/APIKEY.swift/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos
