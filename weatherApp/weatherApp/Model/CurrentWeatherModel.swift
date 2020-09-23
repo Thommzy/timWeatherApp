@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WeatherData: Codable {
+struct WeatherData: Codable  {
     var main : currentWeatherTemperature
     var weather : [CurrentWeatherType]
 }

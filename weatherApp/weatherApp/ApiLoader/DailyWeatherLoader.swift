@@ -10,10 +10,13 @@ import Foundation
 
 //MARK:- DATALOADER TO GET THE DAILY WEATHER
 class DailyWeatherLoader {
-    func loadDaysData(closure: @escaping (DaysWeather) -> ()) {
+    
+    var loadWeeklyDelegate : WeeklyDataProtocol?
+    
+    func loadDaysData() {
                let baseUrl = "https://api.openweathermap.org/data/2.5/forecast"
-               let apiKey = apiKeys().returnAiKey()
-               let state = "Kebbi"
+               let apiKey = "7a22797d0651a1c44a55227285888de5"
+               let state = "Osun"
                let weatherUrl = "\(baseUrl)?q=\(state)&appid=\(apiKey)&units=metric"
                guard let url = URL(string: weatherUrl) else {return}
                let session = URLSession.shared
@@ -22,10 +25,10 @@ class DailyWeatherLoader {
                    do{
                        let jsonDecoder = JSONDecoder()
                        let dataFromJson =  try jsonDecoder.decode(DaysWeather.self, from: data)
-                          closure(dataFromJson)
+                       self.loadWeeklyDelegate?.fetchWeeklyWeather(weather: dataFromJson)
                       }
                    catch {
-                       print(error)
+                    print(error)
                    }
                  }
                }.resume()

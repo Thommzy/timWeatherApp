@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WeatherViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var weatherTableView: UITableView!
     @IBOutlet weak var weatherBackgroundImage: UIImageView!
@@ -19,7 +19,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var currentTemperatureLabel: UILabel!
     
     var data : WeatherData?
-    var dailyData : [(String, Double, String)] = []
+    var dailyData = [(String, Double, String)]()
+    
+   
     
     
     override func viewDidLoad() {
@@ -28,22 +30,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.loadCurrentData()
         self.tableData()
         
-        DataLoader().loadData(closure: { (weather) in
-            self.data = weather
-            self.loadCurrentData()
-            if let encoded = try? JSONEncoder().encode(weather) {
-                UserDefaults.standard.set(encoded, forKey: "currentData")
-            }
-        })
-        
-        
-        DailyWeatherLoader().loadDaysData(closure: { (weather) in
-            self.dailyData = filteredDateAndTemperature(weather.list)
-            self.reloadTableView()
-            if let encoded = try? JSONEncoder().encode(weather) {
-                UserDefaults.standard.set(encoded, forKey: "tableData")
-            }
-        })
+        let weatherLoader = DataLoader()
+        weatherLoader.loadWeatherDelegate = self
+       weatherLoader.loadData()
     }
     
     func currentDefaults() {
@@ -55,15 +44,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func tableData() {
-              DispatchQueue.main.async {
-                  if let loadData = UserDefaults.standard.data(forKey: "tableData"),
-                   let data = try? JSONDecoder().decode(DaysWeather.self, from: loadData) {
-                   self.dailyData = filteredDateAndTemperature(data.list)
-                   self.reloadTableView()
-                  }
-              }
-          }
+     func tableData() {
+           DispatchQueue.main.async {
+               if let loadData = UserDefaults.standard.data(forKey: "tableData"),
+                let data = try? JSONDecoder().decode(DaysWeather.self, from: loadData) {
+                self.dailyData = filteredDateAndTemperature(data.list)
+                self.reloadTableView()
+               }
+           }
+       }
     
  
     
@@ -71,22 +60,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let queue = DispatchQueue(label: "")
            queue.async {
             DispatchQueue.main.async {
-             
                if let data =  self.data {
-               
-               let currenTemperature = data.main.temp
-               let minimumTemperature = data.main.minimumTemperature
-               let maximumTemperature = data.main.maximumTemperature
+                let currenTemperature = data.main.temp
+                let minimumTemperature = data.main.minimumTemperature
+                let maximumTemperature = data.main.maximumTemperature
                let currentValue = String(format: "%.0f", currenTemperature)
                let minimumValue = String(format: "%.0f", minimumTemperature)
                let maximumValue = String(format: "%.0f", maximumTemperature)
-               let weatherType = data.weather.map{$0.main}[0]
+                let weatherType = data.weather.map{$0.main}[0]
                self.minimumTemperatureLabel.text = "\(minimumValue)°"
                self.weatherTemperatureLabel.text = "\(currentValue)°"
                self.currentTemperatureLabel.text = "\(currentValue)°"
                self.maximumTemperatureLabel.text = "\(maximumValue)°"
                self.weatherTemperatureLabel.font = self.weatherTemperatureLabel.font.withSize(45)
-               self.weatherDescriptionLabel.text = weatherType
+                self.weatherDescriptionLabel.text = weatherType
                self.weatherDescriptionLabel.font = self.weatherDescriptionLabel.font.withSize(35)
                self.switchImageAndColor()
                }
@@ -100,11 +87,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let cloudyColor = #colorLiteral(red: 0.3294117647, green: 0.4431372549, blue: 0.4784313725, alpha: 1)
             let rainyColor = #colorLiteral(red: 0.3411764706, green: 0.3411764706, blue: 0.3647058824, alpha: 1)
             let weatherType = data.weather.map{$0.main}[0]
-                if weatherType == "Clouds" {
+            if weatherType == "Clouds" {
                     self.weatherBackgroundImage.image = UIImage(named: ("forest_cloudy"))
                     self.view.backgroundColor = cloudyColor
                 }
-                if weatherType == "Rain" || weatherType == "Thunderstorm" {
+            if weatherType == "Rain" || weatherType == "Thunderstorm" {
                     self.weatherBackgroundImage.image = UIImage(named: ("forest_rainy"))
                     self.view.backgroundColor = rainyColor
                }
@@ -131,5 +118,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.daysWeatherIcon.image = indexData.2 == "Rain" ? UIImage(named: ("rain")) : indexData.2 == "Clouds" || indexData.2 == "Mist" ? UIImage(named: ("partlysunny")) : UIImage(named: ("clear"))
         return cell
     }
+}
+
+
+
+
+
+extension WeatherViewController : CurrentDataProtocols, WeeklyDataProtocol {
+    func fetchWeather(weather: WeatherData) {
+           data = weather
+           self.loadCurrentData()
+             if let encoded = try? JSONEncoder().encode(weather) {
+             UserDefaults.standard.set(encoded, forKey: "currentData")
+           }
+       }
+       
+       func fetchWeeklyWeather(weather: DaysWeather) {
+           dailyData = filteredDateAndTemperature(weather.list)
+           self.reloadTableView()
+           if let encoded = try? JSONEncoder().encode(weather) {
+               UserDefaults.standard.set(encoded, forKey: "tableData")
+           }
+       }
 }
 
